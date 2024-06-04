@@ -62,7 +62,7 @@ export const Grades: React.FC = () => {
         return (
             <Card sx={{ maxWidth: '100%', marginBottom: '16px' }}>
                 <CardActionArea>
-                    <img src={course.image} style={{ height: 140, width: '100%', objectFit: 'cover' }} />
+                    <img src={course.image} style={{ height: 140, width: '100%', objectFit: 'cover' }} alt=""/>
                     <CardContent>
                         <h3>
                             {course.title}
