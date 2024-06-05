@@ -71,29 +71,29 @@ registerRoute(
   })
 );
 
+// Example of runtime caching route with NetworkFirst strategy
 registerRoute(
-  ({url}) => url.origin === 'https://fakestoreapi.com/products',
+  ({ url }) => url.origin === 'https://fakestoreapi.com' && url.pathname.startsWith('/products'),
   new NetworkFirst({
-    networkTimeoutSeconds: 3,
-    cacheName: 'products',
+    cacheName: 'products-cache',
     plugins: [
       new ExpirationPlugin({
         maxEntries: 50,
-        maxAgeSeconds: 5 * 60, // 5 minutes
+        maxAgeSeconds: 24 * 60 * 60, // 1 day
       }),
     ],
   })
 );
 
+// Register route for specific category using NetworkFirst strategy
 registerRoute(
-  ({url}) => url.origin === 'https://fakestoreapi.com/products/category/jewelery',
+  ({ url }) => url.origin === 'https://fakestoreapi.com' && url.pathname.startsWith('/products/category/jewelery'),
   new NetworkFirst({
-    networkTimeoutSeconds: 3,
-    cacheName: 'category',
+    cacheName: 'category-cache',
     plugins: [
       new ExpirationPlugin({
         maxEntries: 50,
-        maxAgeSeconds: 5 * 60, // 5 minutes
+        maxAgeSeconds: 24 * 60 * 60, // 1 day
       }),
     ],
   })
@@ -107,20 +107,26 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// Add logging to debug issues
-self.addEventListener("fetch", event => {
-  console.log("Fetch event for ", event.request.url);
-  if (event.request.url.includes("/fakestoreapi.com/")) {
-    // response to API requests, Cache Update Refresh strategy
+// Add detailed logging for fetch events
+self.addEventListener('fetch', (event) => {
+  console.log('Fetch event for:', event.request.url);
+  if (event.request.url.includes("fakestoreapi.com")) {
     event.respondWith(
-      caches.match(event.request)
-        .then(response => {
-          console.log("Response:", response?.body);
-          return response || fetch(event.request);
-        })
+      caches.match(event.request).then((response) => {
+        if (response) {
+          console.log('Serving from cache:', event.request.url);
+          return response;
+        }
+        console.log('Fetching from network:', event.request.url);
+        return fetch(event.request).then((networkResponse) => {
+          return caches.open('api-cache').then((cache) => {
+            console.log('Caching new response:', event.request.url);
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
+          });
+        });
+      })
     );
-  } else {
-    // response to static files requests, Cache-First strategy
   }
 });
 
@@ -131,5 +137,4 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   console.log("Service Worker activating.");
 });
-
 
