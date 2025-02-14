@@ -6,13 +6,12 @@ import List from '@mui/material/List';
 import CardContent from '@mui/material/CardContent';
 import { CardActionArea } from '@mui/material';
 import './Calendar.css';
+import EssayGrader from './Submission/Submission';
 
 export const Calendar: React.FC = () => {
 
     return (
-        <div>
-            <h1>Welcome to Calendar</h1>
-        </div>
+        <EssayGrader></EssayGrader>
     );
 
 }
@@ -20,7 +19,7 @@ export const Calendar: React.FC = () => {
 export const Organisations: React.FC = () => {
     return (
         <div>
-            <h1>Welcome to Organisations</h1>
+            <h1>Welcome to COURSE</h1>
         </div>
     );
 }
@@ -62,7 +61,7 @@ export const Grades: React.FC = () => {
         return (
             <Card sx={{ maxWidth: '100%', marginBottom: '16px' }}>
                 <CardActionArea>
-                    <img src={course.image} style={{ height: 140, width: '100%', objectFit: 'cover' }} alt=""/>
+                    <img src={course.image} style={{ height: 140, width: '100%', objectFit: 'cover' }} />
                     <CardContent>
                         <h3>
                             {course.title}

@@ -15,6 +15,17 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 import { NetworkFirst } from 'workbox-strategies';
+importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-functions-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-performance-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-remote-config-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging-compat.js');
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -137,4 +148,11 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   console.log("Service Worker activating.");
 });
+
+self.addEventListener('load', (event) => {
+  console.log("Service Worker loading.");
+});
+
+
+
 
