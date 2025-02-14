@@ -1,5 +1,10 @@
-import React from 'react';
+
+
+import React, { useEffect } from 'react';
 import './App.css';
+// import { } from './notificationHelpers';
+import { useVisibilityChange } from './useVisibilityChange';
+import { messaging, onMessage } from './firebase';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -114,10 +119,57 @@ const router = createBrowserRouter(
   ],
 );
 
+// Define the NotificationMessage type
+type NotificationMessage = {
+  title: string;
+  body: string;
+};
+
 const App: React.FC = () => {
+ 
+  const isForeground = useVisibilityChange();
+
+  useEffect(() => {
+    const setupNotifications = (callback: (message: NotificationMessage) => void) =>  {
+      onMessage(messaging, (payload) => {
+        if (payload.notification) {
+          const { title = '', body = '' } = payload.notification;
+          callback({ title, body });
+        }
+      });
+    };
+    setupNotifications((message: NotificationMessage) => {
+      const { title, body } = message;
+      if (isForeground) {
+        // App is in the foreground, show toast notification
+        // toastNotification({
+        //   title,
+        //   description: body,
+        //   status: 'info',
+        // });
+      } else {
+        // App is in the background, show native notification
+        // sendNativeNotification({
+        //   title,
+        //   body,
+        // });
+      }
+    });
+  }, [isForeground]);
+
   return (
-    <RouterProvider router={router} />
+     <RouterProvider router={router} />
   );
 };
+// Handle incoming messages
+onMessage(messaging, (payload) => {
+  console.log('Received a message:', payload);
+  // Display a notification or update UI based on the message
+  if (payload.notification) {
+    const notification = new Notification(payload.notification.title || '', {
+      body: payload.notification.body || '',
+    });
+  }
+});
 
 export default App;
