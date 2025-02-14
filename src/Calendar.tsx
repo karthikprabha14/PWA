@@ -6,12 +6,13 @@ import List from '@mui/material/List';
 import CardContent from '@mui/material/CardContent';
 import { CardActionArea } from '@mui/material';
 import './Calendar.css';
-import EssayGrader from './Submission/Submission';
 
 export const Calendar: React.FC = () => {
 
     return (
-        <EssayGrader></EssayGrader>
+        <div>
+            <h1>Welcome to Calendar</h1>
+        </div>
     );
 
 }
