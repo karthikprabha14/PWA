@@ -136,4 +136,11 @@ onMessage(messaging, (payload) => {
   }
 });
 
+const onFcmTokenReceived = (event: MessageEvent) => {
+  console.log('Received Token from Android :', event.data);
+  console.log('Parsed Token from Android :', JSON.stringify(event.data));
+}
+
+window.addEventListener('message', onFcmTokenReceived); 
+
 export default App;
