@@ -128,6 +128,16 @@ const App: React.FC = () => {
 
     window.addEventListener("message", handleMessage);
   });
+
+  // Function to post a message
+  const postMessage = () => {
+    window.postMessage('Hello from App component', '*');
+  };
+
+  useEffect(() => {
+    // Example of posting a message
+    postMessage();
+  }, []);
   
   return (
      <RouterProvider router={router} />
@@ -144,12 +154,5 @@ onMessage(messaging, (payload) => {
     });
   }
 });
-
-const onFcmTokenReceived = (event: MessageEvent) => {
-  console.log('Received Token from Android :', event.data);
-  console.log('Parsed Token from Android :', JSON.stringify(event.data));
-}
-
-window.addEventListener('message', onFcmTokenReceived); 
 
 export default App;
