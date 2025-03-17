@@ -127,10 +127,6 @@ const App: React.FC = () => {
     };
 
     window.addEventListener("message", handleMessage);
-
-    return () => {
-      window.removeEventListener("message", handleMessage);
-    };
   });
   
   return (
