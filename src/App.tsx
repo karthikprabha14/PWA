@@ -120,6 +120,19 @@ const router = createBrowserRouter(
 );
 
 const App: React.FC = () => {
+  
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      console.log('Received message:', event.data);
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  });
+  
   return (
      <RouterProvider router={router} />
   );
