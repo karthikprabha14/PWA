@@ -122,11 +122,29 @@ const router = createBrowserRouter(
 const App: React.FC = () => {
   
   useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      console.log('Received message:', event.data);
-    };
+    //const handleMessage = (event: MessageEvent) => {
+      //console.log('Received message:', event.data);
+    //};
 
-    window.addEventListener("message", handleMessage);
+    //window.addEventListener("message", handleMessage);
+
+
+    window.addEventListener("message", function (event) {
+  // We are receiveing messages from any origin, you can check of the origin by
+  // using event.origin
+
+  // get the port then use it for communication.
+  var port = event.ports[0];
+  if (typeof port === 'undefined') return;
+
+  // Post message on this port.
+  port.postMessage("Test")
+
+  // Receive upcoming messages on this port.
+  port.onmessage = function(event) {
+    console.log("[PostMessage1] Got message" + event.data);
+  };
+});
   });
 
   // Function to post a message
