@@ -42,6 +42,7 @@ function Courses() {
     
     function CourseCard({ course, isOdd }: { course: CourseItem, isOdd: boolean }) {
         const handleClick = () => {
+            console.log(isOdd ? "https://pwapushnew.dev-public.bbpd.io" : "https://pwapushtestassetlink.dev-public.bbpd.io")
             window.location.href = isOdd ? "https://pwapushnew.dev-public.bbpd.io" : "https://pwapushtestassetlink.dev-public.bbpd.io"
         };
         
