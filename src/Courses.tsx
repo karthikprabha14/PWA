@@ -39,10 +39,14 @@ function Courses() {
     if (loading) {
         return <div>Loading...</div>;
     }
-
-    function CourseCard({ course }: { course: CourseItem }) {
+    
+    function CourseCard({ course, isOdd }: { course: CourseItem, isOdd: boolean }) {
+        const handleClick = () => {
+            window.location.href = isOdd ? "https://pwapushnew.dev-public.bbpd.io" : "https://pwapushtestassetlink.dev-public.bbpd.io"
+        };
+        
         return (
-            <Card sx={{ maxWidth: '100%', marginBottom: '16px' }}>
+            <Card sx={{ maxWidth: '100%', marginBottom: '16px' }} onClick={handleClick}>
                 <CardActionArea>
                     <img src={course.image} style={{ height: 140, width: '100%', objectFit: 'cover' }} />
                     <CardContent>
@@ -65,7 +69,7 @@ function Courses() {
                 <Grid container spacing={2} style={{ padding: 16 }}>
                     {courses.map((course, index) => (
                         <Grid item xs={12} sm={6} md={4} key={index}>
-                            <CourseCard course={course} />
+                            <CourseCard course={course} isOdd={index % 2 !== 0} />
                         </Grid>
                     ))}
                 </Grid>
@@ -73,7 +77,7 @@ function Courses() {
                 // Mobile layout: List view
                 <List style={{ padding: 16 }}>
                     {courses.map((course, index) => (
-                        <CourseCard course={course} key={index} />
+                        <CourseCard course={course} isOdd={index % 2 !== 0} />
                     ))}
                 </List>
             )}
