@@ -47,8 +47,8 @@ function Courses() {
         };
         
         return (
-            <Card sx={{ maxWidth: '100%', marginBottom: '16px' }} onClick={handleClick}>
-                <CardActionArea>
+            <Card sx={{ maxWidth: '100%', marginBottom: '16px' }}>
+                <CardActionArea onClick={handleClick}>
                     <img src={course.image} style={{ height: 140, width: '100%', objectFit: 'cover' }} />
                     <CardContent>
                         <h3>
