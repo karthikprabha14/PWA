@@ -1,1 +1,2 @@
+X-Frame-Options: ALLOW-FROM https://silly-gnome-595f09.netlify.app
 Content-Security-Policy: frame-ancestors 'self' https://silly-gnome-595f09.netlify.app;
